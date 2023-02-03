@@ -27,7 +27,6 @@ const ConfirmationPopup = ({ visible, maskType, onRequestClose, onConfirmClicked
 	}
 
 	useEffect(() => {
-		console.log(selectedPlateImgSrc);
 	}, [visible])
 
   	return (

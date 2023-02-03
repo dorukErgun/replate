@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pressable, Text, TouchableOpacity } from 'react-native';
 
 interface ButtonProps {
@@ -6,9 +6,11 @@ interface ButtonProps {
 	title : any;
 	onPress : any;
 	customClassName? : string;
+	titleColor? : string;
+	disabled? : boolean;
 }
 
-const Button = ({ title, icon, onPress, customClassName } : ButtonProps) => {
+const Button = ({ title, icon, onPress, customClassName, titleColor, disabled } : ButtonProps) => {
 
   	return (
 		<TouchableOpacity
@@ -23,11 +25,13 @@ const Button = ({ title, icon, onPress, customClassName } : ButtonProps) => {
 				shadowOpacity: 0.34,
 				shadowRadius: 6.27,
 				elevation: 10,
+				opacity : disabled ? 0.5 : 1
 			}}
 			activeOpacity={0.7}
+			disabled={disabled}
 		>
 			{icon}
-			<Text className="text-white text-base">
+			<Text className={`text-${titleColor ? titleColor : 'white'} text-base`}>
 				{title}
 			</Text>
 		</TouchableOpacity>

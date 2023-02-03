@@ -1,15 +1,13 @@
 import { Image, SafeAreaView, ScrollView, Text, View, Pressable } from 'react-native'
 
 interface PlateShowerProps {
-	keys : string;
 	image : any;
 	onPlatePressed : any;
 }
 
-const PlateShower = ({ keys, image, onPlatePressed } : PlateShowerProps) => {
+const PlateShower = ({ image, onPlatePressed } : PlateShowerProps) => {
   	return (
 		<Pressable
-			key={keys} 
 			className="w-full py-2"
 			onPress={onPlatePressed}	
 		>

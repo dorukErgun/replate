@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { HomeIcon, HamburgerIcon, PlusIcon, CameraIcon } from '../Icon';
+import { StyleSheet, View } from 'react-native';
+import { HomeIcon, HamburgerIcon, PlusIcon, CameraIcon, RightArrowIcon } from '../Icon';
 import IconButton from '../IconButton';
 import AddOptionsPopover from './AddOptionsPopover';
 import { useRoute } from '@react-navigation/native';
+import { Dimensions } from 'react-native'
+import Theme from '../../theme/theme';
 
 interface NavProps {
 	navigation : any;
@@ -25,6 +27,9 @@ const Nav = ({ navigation, middleButtonOnPress } : NavProps) => {
 			case "PhotoTake" : setMiddleButtonIcon(<CameraIcon size="45" color="white"/>);
 			break;
 
+			case "ImageShower" : setMiddleButtonIcon(<RightArrowIcon size="45" color="white"/>);
+			break;
+
 			default : setMiddleButtonIcon(<PlusIcon size="45" color="white"/>);
 		}
 	}, [route])
@@ -43,26 +48,20 @@ const Nav = ({ navigation, middleButtonOnPress } : NavProps) => {
 				return;
 			}
 			setIsAddOptionsOpen(true);
-			return;;
+			return;
 		}
 		middleButtonOnPress();
 	}
 
 	return (
 		<>
-			<AddOptionsPopover
-				visible = {isAddOptionsOpen}
-				onRequestClose = {() => setIsAddOptionsOpen(false)}
-				navigation = {navigation}
-				from={touchable}
-			/>
-			<View className="bg-mid-purple h-[11vh] flex flex-row justify-evenly items-center relative">
+			<View style={styles.container}>
 				<IconButton
 					key="home-icon-button"
 					icon={<HomeIcon size="45" color="white"/>}
 					onPress={onHomeButtonPressed}
 				/>
-				<View className="pb-[7vh]">
+				<View style={styles.actionButton}>
 					<IconButton
 						key="middle-icon-button"
 						icon={middleButtonIcon}
@@ -80,5 +79,20 @@ const Nav = ({ navigation, middleButtonOnPress } : NavProps) => {
 		</>
 	)
 }
+
+const styles = StyleSheet.create({
+	container: {
+		backgroundColor: Theme.color['mid-purple'],
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
+		alignItems: 'center',
+		bottom:0,
+		width:'100%',
+		height: Dimensions.get('window').height*0.10,
+	},
+	actionButton: {
+		bottom:Dimensions.get('window').height*0.05
+	}
+ });
 
 export default Nav;

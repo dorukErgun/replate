@@ -12,31 +12,28 @@ interface PlatePickerProps {
 
 const PlatePicker = ({ plates, onPlatePressed } : PlatePickerProps ) => {
 
-	console.log(plates);
-
 	return (
 		<View key="bottom-selection" className="pt-5">
 			<Text className="text-white text-2xl">
 				Or choose from your saved plates...
 			</Text>
-			<SafeAreaView className="pt-5">
-				<ScrollView className="pt-2">
-					<Button
-						title="Add a new plate"
-						icon={<PlusIcon size="40" color="white"/>}
-						onPress={() => {console.log('Clicked add new plate')}}
-						customClassName="bg-light-purple w-[100%] px-7 py-5 rounded-2xl flex-row justify-start h-[80px]"
+			<ScrollView className="pt-4">
+				<Button
+					title="Add a new plate"
+					icon={<PlusIcon size="40" color="white"/>}
+					onPress={() => {}}
+					customClassName="bg-light-purple w-[100%] px-7 py-5 rounded-2xl flex-row justify-start h-[80px]"
+				/>
+				<View className="pb-2"/>
+				{plates.map((plate, idx) => 
+					<PlateShower
+						key={idx.toString()}
+						image={plate.imgSrc}
+						onPlatePressed={() => {onPlatePressed(plate.imgSrc)}}
 					/>
-					{plates.map((plate, idx) => 
-						<PlateShower
-							keys={idx.toString()}
-							image={plate.imgSrc}
-							onPlatePressed={() => {onPlatePressed(plate.imgSrc)}}
-						/>
-					)}
-					<View className="mb-5"/>
-				</ScrollView>
-			</SafeAreaView>
+				)}
+				<View className="mb-5"/>
+			</ScrollView>
 		</View>
 	)
 }

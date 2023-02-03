@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, ScrollView, Text, View, ListView, FlatList, SectionList, TouchableHighlight } from 'react-native'
+import BasePage from '../components/BasePage'
 import Button from '../components/Button'
 import ConfirmationPopup from '../components/ConfirmationPopup'
 import { CarIcon, EmptyPlateIcon, PlusIcon } from '../components/Icon'
 import Nav from '../components/Nav/Nav'
 import PlatePicker from '../components/PlatePicker'
 import plateService, { Plate } from '../services/PlateService'
+import useCurrentPhotosStore from '../stores/useCurrentPhotosStore'
 import { MaskType } from '../types/MaskType'
 
 interface SelectPlateProps {
@@ -39,19 +41,18 @@ const SelectPlate = ({ navigation } : SelectPlateProps) => {
 	}
 
 	return (
-		<>
-		<ConfirmationPopup
-			visible = {confirmationVisible}
-			maskType = {mask}
-			onRequestClose = {() => {setConfirmationVisible(false)}}
-			onConfirmClicked = {() => {
-				setConfirmationVisible(false);
-				navigation.navigate("Processing");
-			}}
-			selectedPlateImgSrc={selectedPlateImgSrc}
-		/>
-		<SafeAreaView className="flex-[1] bg-dark-purple p-7">
-			<View key="top-selection">
+		<BasePage>
+			<ConfirmationPopup
+				visible = {confirmationVisible}
+				maskType = {mask}
+				onRequestClose = {() => {setConfirmationVisible(false)}}
+				onConfirmClicked = {() => {
+					setConfirmationVisible(false);
+					navigation.navigate("Processing");
+				}}
+				selectedPlateImgSrc={selectedPlateImgSrc}
+			/>
+			<ScrollView key="top-selection" className="p-7 ">
 				<Text className="text-white text-2xl">
 					Replace plate with...
 				</Text>
@@ -62,7 +63,6 @@ const SelectPlate = ({ navigation } : SelectPlateProps) => {
 						onPress={() => {onSelectionMade(MaskType.EMPTY_PLATE)}}
 						customClassName="bg-light-purple w-[45%] px-7 py-5 rounded-2xl"
 					/>
-					<View className="w-[10%]" />
 					<Button
 						title="Car Color"
 						icon={<CarIcon size="45" color="white"/>}
@@ -77,14 +77,10 @@ const SelectPlate = ({ navigation } : SelectPlateProps) => {
 						onSelectionMade(MaskType.CUSTOM_PLATE);
 					}}
 				/>
-			</View>
-			<Nav 
-				navigation = {navigation} 
-				middleButtonOnPress={() => {}}
-			/>
-		</SafeAreaView>
-		</>
-	)
+			</ScrollView>
+		</BasePage>
+	);
+
 }
 
 export default SelectPlate
